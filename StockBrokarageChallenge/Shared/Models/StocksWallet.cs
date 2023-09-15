@@ -27,12 +27,12 @@ namespace StockBrokarageChallenge.Application.Shared.Models
 
         private void CalculateAveragePrice() 
         {
-            AveragePrice = (TotalInvestedStock / StockQuantity);
+            AveragePrice = Math.Round(TotalInvestedStock / StockQuantity, 2);
         }
 
         private void CalculateCurrentInvestedStock(double currentStockPrice) 
         { 
-            CurrentInvestedStock = currentStockPrice * StockQuantity;
+            CurrentInvestedStock = Math.Round(currentStockPrice * StockQuantity, 2);
         }
 
         public void AddStock(Stock stock, int quantity) 
@@ -49,7 +49,7 @@ namespace StockBrokarageChallenge.Application.Shared.Models
         {
             DomainExceptionValidation.When(quantity < 0, "Quantity must be greater than 0");
             StockQuantity += quantity;
-            TotalInvestedStock += (Stock.Price * quantity);
+            TotalInvestedStock += Math.Round(Stock.Price * quantity, 2);
 
             CalculateAveragePrice();
             CalculateCurrentInvestedStock(Stock.Price);
@@ -57,6 +57,7 @@ namespace StockBrokarageChallenge.Application.Shared.Models
 
         public void SellStocks(int quantity) 
         {
+            DomainExceptionValidation.When(quantity < 0, "Quantity must be greater than 0");
             DomainExceptionValidation.When(quantity > StockQuantity, "Quantity must be lower than StockQuantity");
             if(quantity < StockQuantity)
             {

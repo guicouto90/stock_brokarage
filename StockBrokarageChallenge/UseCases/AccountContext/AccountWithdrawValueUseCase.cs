@@ -18,13 +18,10 @@ namespace StockBrokarageChallenge.Application.UseCases.AccountContext
 
         public async Task<string> ExecuteAsync(AccountWithdrawDepositValueInput? input)
         {
-            var account = await _accountRepository.GetByNumberWithTransactionHistoryAsync(input.AccountNumber);
+            var account = await _accountRepository.GetByCustomerId(input.CustomerId);
             if (account == null)
             {
                 return null;
-            } else if(account.CustomerId != input.CustomerId)
-            {
-                throw new HttpRequestException("Access denied to this account", null, System.Net.HttpStatusCode.Unauthorized);
             }
             try
             {

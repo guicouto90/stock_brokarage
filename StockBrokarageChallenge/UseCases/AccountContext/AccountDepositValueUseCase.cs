@@ -8,31 +8,23 @@ namespace StockBrokarageChallenge.Application.UseCases.AccountContext
         IRequestHandler<AccountWithdrawDepositValueInput, string>
     {
         private readonly IAccountRepository _accountRepository;
-        private readonly ITransactionHistoryRepository _transactionHistoryRepository;
         public AccountDepositValueUseCase(
             IRequestHandlerCollection useCases,
-            IAccountRepository accountRepository,
-            ITransactionHistoryRepository transactionHistoryRepository) : base(useCases)
+            IAccountRepository accountRepository) : base(useCases)
         {
             _accountRepository = accountRepository;
-            _transactionHistoryRepository = transactionHistoryRepository;
         }
 
         public async Task<string> ExecuteAsync(AccountWithdrawDepositValueInput? input)
         {
-            var account = await _accountRepository.GetByNumberAsync(input.AccountNumber);
+            var account = await _accountRepository.GetByCustomerId(input.CustomerId);
             if (account == null)
             {
                 return null;
             }
-            else if (account.CustomerId != input.CustomerId)
-            {
-                throw new HttpRequestException("Access denied to this account", null, System.Net.HttpStatusCode.Unauthorized);
-            }
             try
             {
                 account.DepositValue(input.Value);
-                // await _transactionHistoryRepository.Create(account.LastTransaction());
                 await _accountRepository.Update(account);
                 return "Deposit succeed";
             }

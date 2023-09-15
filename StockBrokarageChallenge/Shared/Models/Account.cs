@@ -80,11 +80,6 @@ namespace StockBrokarageChallenge.Application.Shared.Models
             return BCrypt.Net.BCrypt.Verify(password, Password);
         }
 
-        public TransactionHistory LastTransaction()
-        {
-            return TransactionHistories.LastOrDefault();
-        }
-
         private void AddTransactionHistory(TransactionHistory history) { TransactionHistories.Add(history); }
     }
 }
