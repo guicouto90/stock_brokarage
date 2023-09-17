@@ -14,6 +14,8 @@ namespace StockBrokarageChallenge.Application.Shared.Models
 
         public string? StockCode { get; }
 
+        public double? StockPrice { get; }
+
         public int? StockQuantity { get; }
 
         public DateTime Date { get; }
@@ -25,13 +27,14 @@ namespace StockBrokarageChallenge.Application.Shared.Models
             Date = DateTime.Now;
         }
 
-        public TransactionHistory(TypeTransaction typeTransaction, double transactionValue, string stockCode, int stockQuantity)
+        public TransactionHistory(TypeTransaction typeTransaction, double transactionValue, string stockCode, int stockQuantity, double stockPrice)
         {
             TypeTransaction = typeTransaction;
             TransactionValue = transactionValue;
             Date = DateTime.Now;
             StockCode = stockCode;
             StockQuantity = stockQuantity;
+            StockPrice = stockPrice;
         }
     }
 }

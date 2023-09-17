@@ -10,7 +10,6 @@ namespace StockBrokarageChallenge.Application.UseCases.StockContext
         IRequestHandler<string, StockOutput>
     {
         private readonly IStockRepository _stockRepository;
-        private readonly IStockHistoryPriceRepository _historyPriceRepository;
         private readonly IMapper _mapper;
 
         public StockGetByCodeOrNameUseCase(
@@ -20,7 +19,6 @@ namespace StockBrokarageChallenge.Application.UseCases.StockContext
             IMapper mapper) : base(useCases)
         {
             _stockRepository = stockRepository;
-            _historyPriceRepository = historyPriceRepository;
             _mapper = mapper;
         }
 
@@ -32,11 +30,8 @@ namespace StockBrokarageChallenge.Application.UseCases.StockContext
                 stock.UpdatePrice();
                 var history = new StockHistoryPrice(stock.Price);
                 stock.AddHistory(history);
-                await _historyPriceRepository.Create(history);
                 await _stockRepository.Update(stock);
-
                 var output = _mapper.Map<StockOutput>(stock);
-                output.History = null;
                 return output;
             } else
             {

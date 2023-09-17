@@ -68,7 +68,7 @@ namespace StockBrokarageChallenge.WebApi.Controllers
                     .ExecuteAsync(input);
                 if (output != null)
                 {
-                    return output == "Deposit succeed" ? Ok(output) : BadRequest(output);
+                    return output == "Withdraw succeed" ? Ok(output) : BadRequest(output);
                 }
                 else
                 {

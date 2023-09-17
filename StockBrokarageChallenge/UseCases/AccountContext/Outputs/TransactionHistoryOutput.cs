@@ -18,6 +18,8 @@ namespace StockBrokarageChallenge.Application.UseCases.AccountContext.Outputs
 
         public int? StockQuantity { get; set; }
 
+        public double? StockPrice { get; set; }
+
         public DateTime Date { get; set; }
 
     }

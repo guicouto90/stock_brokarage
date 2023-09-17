@@ -5,7 +5,7 @@ namespace StockBrokarageChallenge.Application.UseCases.LoginContext.Inputs
     public class LoginInput
     {
         [Required(ErrorMessage = "Cpf is required")]
-        [StringLength(11, ErrorMessage = "Cpf length must be 11 characters")]
+        [RegularExpression("^[0-9]{11}$", ErrorMessage = "CPF must have 11 numeric characters")]
         public string CustomerCpf { get; set; }
 
         [Required(ErrorMessage = "Password is required")]

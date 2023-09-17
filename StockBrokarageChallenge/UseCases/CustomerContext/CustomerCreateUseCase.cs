@@ -27,18 +27,29 @@ namespace StockBrokarageChallenge.Application.UseCases.CustomerContext
         }
 
         public async Task<CustomerOutput> ExecuteAsync(CustomerCreateInput? input)
-        {
-            var customerExist = await _customerRepository.GetByCpfAsync(input.Cpf);
-            if (customerExist != null)
+        {            
+            try
             {
-                return null;
-            }
-            var lastAccount = await _accountRepository.GetLastAccount();
-            var accountNumber = lastAccount == null ? 1 : lastAccount.AccountNumber + 1;
-            var customer = new Customer(input.Name, input.Cpf, accountNumber, input.Password);
-            await _customerRepository.Create(customer);
+                var customerExist = await _customerRepository.GetByCpfAsync(input.Cpf);
+                if (customerExist != null)
+                {
+                    throw new HttpRequestException("Customer already have an account", null, System.Net.HttpStatusCode.BadRequest);
+                }
+                var lastAccount = await _accountRepository.GetLastAccount();
+                var accountNumber = lastAccount == null ? 1 : lastAccount.AccountNumber + 1;
+                var customer = new Customer(input.Name, input.Cpf, accountNumber, input.Password);
+                await _customerRepository.Create(customer);
 
-            return _mapper.Map<CustomerOutput>(customer);
+                return _mapper.Map<CustomerOutput>(customer);
+            }
+            catch (DomainExceptionValidation ex)
+            {
+                throw new HttpRequestException(ex.Message, null, System.Net.HttpStatusCode.BadRequest);
+            }
+            catch (Exception ex)
+            {
+                throw new HttpRequestException("Internal Server Error", null, System.Net.HttpStatusCode.InternalServerError);
+            }
         }
     }
 }

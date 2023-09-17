@@ -32,12 +32,12 @@ namespace StockBrokarageChallenge.Application.Shared.Data.Repository
         {
             if (input.Length == 5)
             {
-                var stock = await _context.Stocks.Where(e => e.Code == input).FirstOrDefaultAsync();
+                var stock = await _context.Stocks.Where(e => e.Code == input).Include(s => s.History).FirstOrDefaultAsync();
                 return stock;
             }
             else
             {
-                var stock = await _context.Stocks.Where(e => e.Name == input).FirstOrDefaultAsync();
+                var stock = await _context.Stocks.Where(e => e.Name == input).Include(s => s.History).FirstOrDefaultAsync();
                 return stock;
             }
         }

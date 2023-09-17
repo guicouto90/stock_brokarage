@@ -54,16 +54,18 @@ namespace StockBrokarageChallenge.Application.Shared.Models
         {
             double amount = quantity * stock.Price;
             DomainExceptionValidation.When(Balance < amount, "There is no enough balance to buy these stocks");
+            DomainExceptionValidation.When(quantity <= 0, "Quantity must be bigger than 0");
             Wallet.BuyStock(stock, quantity);
-            AddTransactionHistory(new TransactionHistory(Enums.TypeTransaction.BUY_STOCK, amount, stock.Code, quantity));
+            AddTransactionHistory(new TransactionHistory(Enums.TypeTransaction.BUY_STOCK, -amount, stock.Code, quantity, stock.Price));
             Balance -= amount;
         }
 
         public void SellStock(Stock stock, int quantity) 
         {
+            DomainExceptionValidation.When(quantity <= 0, "Quantity must be bigger than 0");
             double amount = quantity * stock.Price;
             Wallet.SellStock(stock, quantity);
-            AddTransactionHistory(new TransactionHistory(Enums.TypeTransaction.SELL_STOCK, amount, stock.Code, quantity));
+            AddTransactionHistory(new TransactionHistory(Enums.TypeTransaction.SELL_STOCK, amount, stock.Code, quantity, stock.Price));
             Balance += amount;
         }
 

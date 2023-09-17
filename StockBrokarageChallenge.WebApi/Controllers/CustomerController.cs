@@ -23,15 +23,22 @@ namespace StockBrokarageChallenge.WebApi.Controllers
         [ProducesResponseType(typeof(string), 201)]
         public async Task<IActionResult> CreateAsync([FromBody] CustomerCreateInput input)
         {
-            var output = await _requestHandlers.Using<CustomerCreateUseCase>()
+            try
+            {
+                var output = await _requestHandlers.Using<CustomerCreateUseCase>()
                 .ExecuteAsync(input);
-            if(output != null)
-            {
-                return Ok($"Customer created with account number {output.Account.AccountNumber}");// return CreatedAtAction(nameof(Customer), new { id = output.Id }, $"Customer created with account number {output.Account.AccountNumber}");
-            } else
-            {
-                return BadRequest("Customer already have an account");
+
+                return Ok($"Customer created with account number {output.Account.AccountNumber}");
             }
+            catch (HttpRequestException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex);
+            }
+
         }
     }
 }
