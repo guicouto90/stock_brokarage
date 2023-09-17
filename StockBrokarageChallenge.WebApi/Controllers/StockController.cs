@@ -20,23 +20,40 @@ namespace StockBrokarageChallenge.WebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateAsync([FromBody] StockCreateInput input)
         {
-            var output = await _requestHandlers.Using<StockCreateUseCase>()
+            try
+            {
+                var output = await _requestHandlers.Using<StockCreateUseCase>()
                 .ExecuteAsync(input);
-            if(output != null)
-            {
-                return Ok(output);
-            } else
-            {
-                return BadRequest(output);
+                if (output != null)
+                {
+                    return Ok(output);
+                }
+                else
+                {
+                    return BadRequest(output);
+                }
             }
+            catch (Exception ex)
+            {
+                return StatusCode(500);
+            }
+
         }
 
         [HttpGet]
         [ProducesResponseType(typeof(ICollection<StockOutput>), 200)]
         public async Task<IActionResult> ListAllAsync()
         {
-            var output = await _requestHandlers.Using<StockGetAllUseCase>().ExecuteAsync(null);
-            return Ok(output);
+            try
+            {
+                var output = await _requestHandlers.Using<StockGetAllUseCase>().ExecuteAsync(null);
+                return Ok(output);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500);
+            }
+
         }
 
         /// <summary>
@@ -49,12 +66,20 @@ namespace StockBrokarageChallenge.WebApi.Controllers
         [ProducesResponseType(404)]
         public async Task<IActionResult> ListAsyncByNameOrCode([FromQuery] string filter)
         {
-            var output = await _requestHandlers.Using<StockGetByCodeOrNameUseCase>().ExecuteAsync(filter);
-            if(output != null)
+            try
             {
-                return Ok(output);
+                var output = await _requestHandlers.Using<StockGetByCodeOrNameUseCase>().ExecuteAsync(filter);
+                if (output != null)
+                {
+                    return Ok(output);
+                }
+                return NotFound("Ação não encontrada");
             }
-            return NotFound("Ação não encontrada");
+            catch (Exception ex)
+            {
+                return StatusCode(500);
+            }
+
         }
     }
 }
