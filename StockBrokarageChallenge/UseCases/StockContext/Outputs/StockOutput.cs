@@ -10,7 +10,12 @@ namespace StockBrokarageChallenge.Application.UseCases.StockContext.Outputs
         public string Name { get; set; }
 
         public string Code { get; set; }
-        public double Price { get; set; }
+
+        private double _price;
+        public double Price {
+            get { return Math.Round(_price, 2); }
+            set { _price = value; }
+        }
         public ICollection<StockHistoryPriceOutput> History { get; set; }
     }
 }

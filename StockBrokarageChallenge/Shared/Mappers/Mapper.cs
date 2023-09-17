@@ -17,6 +17,7 @@ namespace StockBrokarageChallenge.Application.Shared.Mappers
             CreateMap<Account, AccountOutput>();
             CreateMap<TransactionHistory, TransactionHistoryOutput>();
             CreateMap<Wallet, WalletOutput>();
+            CreateMap<StocksWallet, StocksWalletOutput>();
         }
     }
 }

@@ -6,7 +6,11 @@
 
         public int StockId { get; set; }
 
-        public double ActualPrice { get; set; }
+        private double _actualPrice;
+        public double ActualPrice { 
+            get { return Math.Round(_actualPrice, 2); }
+            set { _actualPrice = value; } 
+        }
 
         public DateTime UpdatedAt { get; set; }
     }

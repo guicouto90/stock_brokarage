@@ -1,18 +1,22 @@
-﻿using StockBrokarageChallenge.Application.Shared.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace StockBrokarageChallenge.Application.UseCases.AccountContext.Outputs
+﻿namespace StockBrokarageChallenge.Application.UseCases.AccountContext.Outputs
 {
     public class WalletOutput
     {
-        public double TotalInvested { get; set; }
+        private double _totalInvested;
+        public double TotalInvested
+        {
+            get { return Math.Round(_totalInvested, 2); }
+            set { _totalInvested = value; }
+        }
 
-        public double CurrentBalance { get; set; }
+        private double _currentBalance;
 
-        public List<StocksWallet> StocksWallet { get; set; }
+        public double CurrentBalance
+        {
+            get { return Math.Round(_currentBalance, 2); }
+            set { _currentBalance = value; }
+        }
+
+        public List<StocksWalletOutput> StocksWallet { get; set; }
     }
 }

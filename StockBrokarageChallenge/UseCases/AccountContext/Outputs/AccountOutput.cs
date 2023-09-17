@@ -1,9 +1,5 @@
 ﻿using StockBrokarageChallenge.Application.Shared.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace StockBrokarageChallenge.Application.UseCases.AccountContext.Outputs
 {
@@ -14,7 +10,13 @@ namespace StockBrokarageChallenge.Application.UseCases.AccountContext.Outputs
 
         public Customer Customer { get; set; }
         public int AccountNumber { get; set; }
-        public double Balance { get; set; }
+
+        private double _balance;
+        public double Balance
+        {
+            get { return Math.Round(_balance, 2); }
+            set { _balance = value; }
+        }
 
         public ICollection<TransactionHistoryOutput> TransactionHistories { get; set; }
 

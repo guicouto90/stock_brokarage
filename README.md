@@ -66,7 +66,7 @@ Desenvolva uma web api que permita aos usuários simular compras e vendas de aç
 ```
 
 - Exemplo de mensagem quando um é cliente criado com sucesso:
-```json
+```
 Customer created with account number 3
 ```
 
@@ -91,7 +91,7 @@ Customer created with account number 3
 ```
 
 - Exemplo mensagem de erro na autenticação:
-```json
+```
 Cpf/password invalid
 ```
 
@@ -106,7 +106,7 @@ Cpf/password invalid
 }
 ```
 
-- Exemplo json de autenticação com sucesso:
+- Exemplo de resposta de uma requisição:
 ```json
 {
   "id": 3,
@@ -134,19 +134,19 @@ Cpf/password invalid
     "id": 1,
     "name": "VALE",
     "code": "VALE3",
-    "price": 4.41,
+    "price": 17.89,
     "history": [
       {
-        "id": 4,
+        "id": 1027,
         "stockId": 1,
-        "actualPrice": 45.40999984741211,
-        "updatedAt": "2023-09-14T18:08:36.2544002"
+        "actualPrice": 34.49,
+        "updatedAt": "2023-09-17T15:11:25.6006161"
       },
       {
-        "id": 7,
+        "id": 1031,
         "stockId": 1,
-        "actualPrice": 4.41,
-        "updatedAt": "2023-09-16T20:39:00.6492965-03:00"
+        "actualPrice": 17.89,
+        "updatedAt": "2023-09-17T15:26:05.0549727-03:00"
       }
     ]
   },
@@ -154,39 +154,39 @@ Cpf/password invalid
     "id": 2,
     "name": "PETROBRAS",
     "code": "PETR4",
-    "price": 10.97,
+    "price": 13.38,
     "history": [
       {
-        "id": 5,
+        "id": 1030,
         "stockId": 2,
-        "actualPrice": 25.850000381469727,
-        "updatedAt": "2023-09-14T18:08:36.3036108"
+        "actualPrice": 36.73,
+        "updatedAt": "2023-09-17T15:18:37.8433237"
       },
       {
-        "id": 8,
+        "id": 1032,
         "stockId": 2,
-        "actualPrice": 10.97,
-        "updatedAt": "2023-09-16T20:39:00.715551-03:00"
+        "actualPrice": 13.38,
+        "updatedAt": "2023-09-17T15:26:05.0910733-03:00"
       }
     ]
   },
   {
-    "id": 3,
+    "id": 1002,
     "name": "Teste INC",
     "code": "TSTE4",
-    "price": 15.53,
+    "price": 20.78,
     "history": [
       {
-        "id": 6,
-        "stockId": 3,
-        "actualPrice": 32.18000030517578,
-        "updatedAt": "2023-09-16T20:03:28.9095011"
+        "id": 1029,
+        "stockId": 1002,
+        "actualPrice": 30,
+        "updatedAt": "2023-09-17T15:11:25.8189225"
       },
       {
-        "id": 9,
-        "stockId": 3,
-        "actualPrice": 15.53,
-        "updatedAt": "2023-09-16T20:39:00.741229-03:00"
+        "id": 1033,
+        "stockId": 1002,
+        "actualPrice": 20.78,
+        "updatedAt": "2023-09-17T15:26:05.1195326-03:00"
       }
     ]
   }
@@ -197,26 +197,26 @@ Cpf/password invalid
 - A cada listagem, atualizará o preço das ações randomicamente. Simulando oscilações que ocorrem no mercado.
 - Exemplo de resposta de uma requisição a url `/api/Stock/code-or-name?filter=PETR4`:
 ```json
- {
-    "id": 2,
-    "name": "PETROBRAS",
-    "code": "PETR4",
-    "price": 10.97,
-    "history": [
-      {
-        "id": 5,
-        "stockId": 2,
-        "actualPrice": 25.850000381469727,
-        "updatedAt": "2023-09-14T18:08:36.3036108"
-      },
-      {
-        "id": 8,
-        "stockId": 2,
-        "actualPrice": 10.97,
-        "updatedAt": "2023-09-16T20:39:00.715551-03:00"
-      }
-    ]
-  }
+{
+  "id": 2,
+  "name": "PETROBRAS",
+  "code": "PETR4",
+  "price": 36.73,
+  "history": [
+    {
+      "id": 1028,
+      "stockId": 2,
+      "actualPrice": 40.52,
+      "updatedAt": "2023-09-17T15:11:25.7866997"
+    },
+    {
+      "id": 1030,
+      "stockId": 2,
+      "actualPrice": 36.73,
+      "updatedAt": "2023-09-17T15:18:37.8433237-03:00"
+    }
+  ]
+}
 
 ```
 
@@ -228,7 +228,7 @@ Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjdXN0b21lcklkIjoiMyIsImFjY291bnRJ
 ```
 - Requisições sem autenticação retornará a mensagem:
 
-```json
+```
 Status Code: 401; Unauthorized
 ```
 
@@ -241,7 +241,7 @@ Status Code: 401; Unauthorized
 }
 ```
 - Exemplo de resposta deposito efetuado com sucesso:
-```json
+```
 Deposit succeed
 ```
 
@@ -254,11 +254,11 @@ Deposit succeed
 }
 ```
 - Exemplo de resposta saque efetuado com sucesso:
-```json
+```
 Withdraw succeed
 ```
 - Exemplo de resposta quando não há saldo suficiente:
-```json
+```
 There is no enough balance to withdraw
 ```
 
@@ -272,15 +272,15 @@ There is no enough balance to withdraw
 }
 ```
 - Exemplo de resposta saque efetuado com sucesso:
-```json
+```
 Purchase succeed - Quantity: 400, Stock PETR4
 ```
 - Exemplo de resposta quando não há saldo suficiente:
-```json
+```
 There is no enough balance to buy these stocks
 ```
 - Exemplo de resposta quando não encontra uma ação:
-```json
+```
 Stock Not Found
 ```
 
@@ -294,29 +294,29 @@ Stock Not Found
 }
 ```
 - Exemplo de resposta saque efetuado com sucesso:
-```json
+```
 Sold succeed - Quantity: 200, Stock PETR4
 ```
 - Exemplo de resposta quando não há ação selecionada em sua carteira:
-```json
+```
 You dont have this stock in your wallet
 ```
 
 - Exemplo de resposta quando não há a quantidade informada na venda, é menor que a quantidade que se tem em carteira de uma determinada ação:
-```json
+```
 Quantity must be lower than StockQuantity
 ```
 
 <b>`GET /api/Account/transaction-history`</b>
 - Endpoint que lista todas as transações efetuadas pela conta logada.
-- Exemplo jsson de resposta:
+- Exemplo json de resposta:
 ```json
 {
   "id": 5,
   "customerId": 5,
   "customer": null,
   "accountNumber": 5,
-  "balance": 1727.0000457763672,
+  "balance": 3195,
   "transactionHistories": [
     {
       "id": 1014,
@@ -325,28 +325,68 @@ Quantity must be lower than StockQuantity
       "transactionValue": 5000,
       "stockCode": null,
       "stockQuantity": null,
-      "stockPrice": null,
+      "stockPrice": 0,
       "date": "2023-09-16T22:12:56.9623647"
     },
     {
       "id": 1015,
       "accountId": 5,
       "typeTransaction": "BUY_STOCK",
-      "transactionValue": -2313.9999389648438,
+      "transactionValue": -2314,
       "stockCode": "PETR4",
       "stockQuantity": 200,
-      "stockPrice": 11.569999694824219,
+      "stockPrice": 11.57,
       "date": "2023-09-16T22:13:11.8413045"
     },
     {
       "id": 1016,
       "accountId": 5,
       "typeTransaction": "BUY_STOCK",
-      "transactionValue": -959.0000152587891,
+      "transactionValue": -959,
       "stockCode": "VALE3",
       "stockQuantity": 100,
-      "stockPrice": 9.59000015258789,
+      "stockPrice": 9.59,
       "date": "2023-09-16T22:13:21.2386095"
+    },
+    {
+      "id": 1017,
+      "accountId": 5,
+      "typeTransaction": "BUY_STOCK",
+      "transactionValue": -220,
+      "stockCode": "VALE3",
+      "stockQuantity": 100,
+      "stockPrice": 2.2,
+      "date": "2023-09-16T22:19:32.2154068"
+    },
+    {
+      "id": 1018,
+      "accountId": 5,
+      "typeTransaction": "SELL_STOCK",
+      "transactionValue": 352,
+      "stockCode": "PETR4",
+      "stockQuantity": 100,
+      "stockPrice": 3.52,
+      "date": "2023-09-16T22:20:02.6914723"
+    },
+    {
+      "id": 1019,
+      "accountId": 5,
+      "typeTransaction": "SELL_STOCK",
+      "transactionValue": 1586,
+      "stockCode": "VALE3",
+      "stockQuantity": 100,
+      "stockPrice": 15.86,
+      "date": "2023-09-16T22:20:06.5220538"
+    },
+    {
+      "id": 1020,
+      "accountId": 5,
+      "typeTransaction": "WITHDRAW",
+      "transactionValue": -250,
+      "stockCode": null,
+      "stockQuantity": null,
+      "stockPrice": null,
+      "date": "2023-09-17T15:23:59.7689472"
     }
   ]
 }
@@ -361,50 +401,50 @@ Quantity must be lower than StockQuantity
     "id": 1015,
     "accountId": 5,
     "typeTransaction": "BUY_STOCK",
-    "transactionValue": -2313.9999389648438,
+    "transactionValue": -2314,
     "stockCode": "PETR4",
     "stockQuantity": 200,
-    "stockPrice": 11.569999694824219,
+    "stockPrice": 11.57,
     "date": "2023-09-16T22:13:11.8413045"
   },
   {
     "id": 1016,
     "accountId": 5,
     "typeTransaction": "BUY_STOCK",
-    "transactionValue": -959.0000152587891,
+    "transactionValue": -959,
     "stockCode": "VALE3",
     "stockQuantity": 100,
-    "stockPrice": 9.59000015258789,
+    "stockPrice": 9.59,
     "date": "2023-09-16T22:13:21.2386095"
   },
   {
     "id": 1017,
     "accountId": 5,
     "typeTransaction": "BUY_STOCK",
-    "transactionValue": -220.00000476837158,
+    "transactionValue": -220,
     "stockCode": "VALE3",
     "stockQuantity": 100,
-    "stockPrice": 2.200000047683716,
+    "stockPrice": 2.2,
     "date": "2023-09-16T22:19:32.2154068"
   },
   {
     "id": 1018,
     "accountId": 5,
     "typeTransaction": "SELL_STOCK",
-    "transactionValue": 351.99999809265137,
+    "transactionValue": 352,
     "stockCode": "PETR4",
     "stockQuantity": 100,
-    "stockPrice": 3.5199999809265137,
+    "stockPrice": 3.52,
     "date": "2023-09-16T22:20:02.6914723"
   },
   {
     "id": 1019,
     "accountId": 5,
     "typeTransaction": "SELL_STOCK",
-    "transactionValue": 1585.9999656677246,
+    "transactionValue": 1586,
     "stockCode": "VALE3",
     "stockQuantity": 100,
-    "stockPrice": 15.859999656677246,
+    "stockPrice": 15.86,
     "date": "2023-09-16T22:20:06.5220538"
   }
 ]
@@ -418,60 +458,32 @@ Quantity must be lower than StockQuantity
 - Exemplo json de resposta:
 ```json
 {
-  "totalInvested": 4468.000030517578,
-  "currentBalance": 9725,
+  "totalInvested": 1746.5,
+  "currentBalance": 7122,
   "stocksWallet": [
     {
-      "id": 4,
-      "walletId": 3,
-      "stockId": 2,
-      "averagePrice": 4.09,
-      "stockQuantity": 200,
-      "totalInvestedStock": 818.0000305175781,
-      "currentInvestedStock": 2314,
+      "averagePrice": 11.57,
+      "stockQuantity": 100,
+      "totalInvestedStock": 1157,
+      "currentInvestedStock": 3673,
       "stock": {
         "id": 2,
         "name": "PETROBRAS",
         "code": "PETR4",
-        "price": 11.569999694824219,
-        "createdAt": "2023-09-13T19:06:43.9385396",
-        "updatedAt": "2023-09-16T21:57:40.7060948",
+        "price": 36.73,
         "history": []
       }
     },
     {
-      "id": 5,
-      "walletId": 3,
-      "stockId": 1,
-      "averagePrice": 4.41,
-      "stockQuantity": 400,
-      "totalInvestedStock": 1763.9999389648438,
-      "currentInvestedStock": 3836,
+      "averagePrice": 5.9,
+      "stockQuantity": 100,
+      "totalInvestedStock": 589.5,
+      "currentInvestedStock": 3449,
       "stock": {
         "id": 1,
         "name": "VALE",
         "code": "VALE3",
-        "price": 9.59000015258789,
-        "createdAt": "2023-09-13T19:06:27.0019085",
-        "updatedAt": "2023-09-16T21:57:40.6574131",
-        "history": []
-      }
-    },
-    {
-      "id": 6,
-      "walletId": 3,
-      "stockId": 1002,
-      "averagePrice": 18.86,
-      "stockQuantity": 100,
-      "totalInvestedStock": 1886.0000610351562,
-      "currentInvestedStock": 3575,
-      "stock": {
-        "id": 1002,
-        "name": "Teste INC",
-        "code": "TSTE4",
-        "price": 35.75,
-        "createdAt": "2023-09-16T20:03:28.9085899",
-        "updatedAt": "2023-09-16T21:57:40.7313444",
+        "price": 34.49,
         "history": []
       }
     }
