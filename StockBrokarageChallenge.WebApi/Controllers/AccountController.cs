@@ -31,7 +31,7 @@ namespace StockBrokarageChallenge.WebApi.Controllers
                 var customerId = User.Claims.FirstOrDefault(c => c.Type == "customerId").Value;
                 input.CustomerId = int.Parse(customerId);
                 var output = await _requestHandlers.Using<AccountDepositValueUseCase>()
-                    .ExecuteAsync(input);
+                    .ExecuteAsync(input).ConfigureAwait(false);
                 if (output != null)
                 {
                     return output == "Deposit succeed" ? Ok(output) : BadRequest(output);
@@ -65,7 +65,7 @@ namespace StockBrokarageChallenge.WebApi.Controllers
                 var customerId = User.Claims.FirstOrDefault(c => c.Type == "customerId").Value;
                 input.CustomerId = int.Parse(customerId);
                 var output = await _requestHandlers.Using<AccountWithdrawValueUseCase>()
-                    .ExecuteAsync(input);
+                    .ExecuteAsync(input).ConfigureAwait(false);
                 if (output != null)
                 {
                     return output == "Withdraw succeed" ? Ok(output) : BadRequest(output);
@@ -132,7 +132,7 @@ namespace StockBrokarageChallenge.WebApi.Controllers
             {
                 var customerId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == "customerId").Value);
                 var output = await _requestHandlers.Using<AccountStockTransactionsUseCase>()
-                    .ExecuteAsync(customerId);
+                    .ExecuteAsync(customerId).ConfigureAwait(false);
                 if (output != null)
                 {
                     return Ok(output);
@@ -165,7 +165,7 @@ namespace StockBrokarageChallenge.WebApi.Controllers
             {
                 var customerId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == "customerId").Value);
                 var output = await _requestHandlers.Using<AccountListAccountUseCase>()
-                    .ExecuteAsync(customerId);
+                    .ExecuteAsync(customerId).ConfigureAwait(false);
                 if (output != null)
                 {
                     return Ok(output);
@@ -198,7 +198,7 @@ namespace StockBrokarageChallenge.WebApi.Controllers
             {
                 var customerId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == "customerId").Value);
                 input.CustomerId = customerId;
-                var output = await _requestHandlers.Using<AccountBuyStockUseCase>().ExecuteAsync(input);
+                var output = await _requestHandlers.Using<AccountBuyStockUseCase>().ExecuteAsync(input).ConfigureAwait(false);
                 return Ok(output);
             }
             catch (HttpRequestException ex)
@@ -229,7 +229,7 @@ namespace StockBrokarageChallenge.WebApi.Controllers
             {
                 var customerId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == "customerId").Value);
                 input.CustomerId = customerId;
-                var output = await _requestHandlers.Using<AccountSellStockUseCase>().ExecuteAsync(input);
+                var output = await _requestHandlers.Using<AccountSellStockUseCase>().ExecuteAsync(input).ConfigureAwait(false);
                 return Ok(output);
             }
             catch (HttpRequestException ex)

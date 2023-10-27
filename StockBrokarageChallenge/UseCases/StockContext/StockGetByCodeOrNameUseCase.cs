@@ -22,15 +22,15 @@ namespace StockBrokarageChallenge.Application.UseCases.StockContext
             _mapper = mapper;
         }
 
-        public async Task<StockOutput> ExecuteAsync(string? input)
+        public async Task<StockOutput?> ExecuteAsync(string? input)
         {
-            var stock = await _stockRepository.GetByCodeOrByNameAsync(input);
+            var stock = await _stockRepository.GetByCodeOrByNameAsync(input).ConfigureAwait(false);
             if(stock != null)
             {
                 stock.UpdatePrice();
                 var history = new StockHistoryPrice(stock.Price);
                 stock.AddHistory(history);
-                await _stockRepository.Update(stock);
+                await _stockRepository.Update(stock).ConfigureAwait(false);
                 var output = _mapper.Map<StockOutput>(stock);
                 return output;
             } else

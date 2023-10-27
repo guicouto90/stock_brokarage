@@ -23,7 +23,7 @@ namespace StockBrokarageChallenge.WebApi.Controllers
             try
             {
                 var output = await _requestHandlers.Using<StockCreateUseCase>()
-                .ExecuteAsync(input);
+                .ExecuteAsync(input).ConfigureAwait(false);
                 if (output != null)
                 {
                     return Ok(output);
@@ -46,7 +46,7 @@ namespace StockBrokarageChallenge.WebApi.Controllers
         {
             try
             {
-                var output = await _requestHandlers.Using<StockGetAllUseCase>().ExecuteAsync(null);
+                var output = await _requestHandlers.Using<StockGetAllUseCase>().ExecuteAsync(null).ConfigureAwait(false);
                 return Ok(output);
             }
             catch (Exception ex)
@@ -68,7 +68,7 @@ namespace StockBrokarageChallenge.WebApi.Controllers
         {
             try
             {
-                var output = await _requestHandlers.Using<StockGetByCodeOrNameUseCase>().ExecuteAsync(filter);
+                var output = await _requestHandlers.Using<StockGetByCodeOrNameUseCase>().ExecuteAsync(filter).ConfigureAwait(false);
                 if (output != null)
                 {
                     return Ok(output);
@@ -79,7 +79,6 @@ namespace StockBrokarageChallenge.WebApi.Controllers
             {
                 return StatusCode(500);
             }
-
         }
     }
 }

@@ -23,7 +23,7 @@ namespace StockBrokarageChallenge.Application.UseCases.AccountContext
 
         public async Task<List<TransactionHistoryOutput>> ExecuteAsync(int input)
         {
-            var account = await _accountRepository.GetByCustomerId(input);
+            var account = await _accountRepository.GetByCustomerId(input).ConfigureAwait(false);
 
             var stockTransactionHistory = account.TransactionHistories
                 .Where(th => th.TypeTransaction == TypeTransaction.BUY_STOCK

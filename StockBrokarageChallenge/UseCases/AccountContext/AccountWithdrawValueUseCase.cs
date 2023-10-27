@@ -16,9 +16,9 @@ namespace StockBrokarageChallenge.Application.UseCases.AccountContext
             _accountRepository = accountRepository;
         }
 
-        public async Task<string> ExecuteAsync(AccountWithdrawDepositValueInput? input)
+        public async Task<string?> ExecuteAsync(AccountWithdrawDepositValueInput? input)
         {
-            var account = await _accountRepository.GetByCustomerId(input.CustomerId);
+            var account = await _accountRepository.GetByCustomerId(input.CustomerId).ConfigureAwait(false);
             if (account == null)
             {
                 return null;
@@ -26,7 +26,7 @@ namespace StockBrokarageChallenge.Application.UseCases.AccountContext
             try
             {
                 account.WithdrawValue(input.Value);
-                await _accountRepository.Update(account);
+                await _accountRepository.Update(account).ConfigureAwait(false);
                 return "Withdraw succeed";
             } catch (DomainExceptionValidation ex)
             {

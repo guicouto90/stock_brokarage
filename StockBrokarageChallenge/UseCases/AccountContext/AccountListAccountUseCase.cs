@@ -21,10 +21,10 @@ namespace StockBrokarageChallenge.Application.UseCases.AccountContext
 
         public async Task<WalletOutput> ExecuteAsync(int input)
         {
-            var account = await _accountRepository.GetByCustomerIdWithWalletAsync(input);
+            var account = await _accountRepository.GetByCustomerIdWithWalletAsync(input).ConfigureAwait(false);
 
             account.Wallet.UpdateCurrentBalance();
-            await _accountRepository.Update(account);
+            await _accountRepository.Update(account).ConfigureAwait(false);
 
             return _mapper.Map<WalletOutput>(account.Wallet);
         }

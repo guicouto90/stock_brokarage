@@ -25,15 +25,15 @@ namespace StockBrokarageChallenge.Application.UseCases.AccountContext
         {
             try
             {
-                var account = await _accountRepository.GetByCustomerIdWithWalletAsync(input.CustomerId);
-                var stock = await _stockRepository.GetByCodeOrByNameAsync(input.StockCode);
+                var account = await _accountRepository.GetByCustomerIdWithWalletAsync(input.CustomerId).ConfigureAwait(false);
+                var stock = await _stockRepository.GetByCodeOrByNameAsync(input.StockCode).ConfigureAwait(false);
                 if(stock == null)
                 {
                     throw new HttpRequestException("Stock Not Found", null, System.Net.HttpStatusCode.NotFound);
                 } else
                 {
                     account.BuyStock(stock, input.Quantity);
-                    await _accountRepository.Update(account);
+                    await _accountRepository.Update(account).ConfigureAwait(false);
                     return $"Purchase succeed - Quantity: {input.Quantity}, Stock {stock.Code}";
                 }
             } catch(DomainExceptionValidation ex)

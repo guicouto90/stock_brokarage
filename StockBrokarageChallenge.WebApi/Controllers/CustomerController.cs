@@ -26,7 +26,7 @@ namespace StockBrokarageChallenge.WebApi.Controllers
             try
             {
                 var output = await _requestHandlers.Using<CustomerCreateUseCase>()
-                .ExecuteAsync(input);
+                .ExecuteAsync(input).ConfigureAwait(false);
 
                 return Ok($"Customer created with account number {output.Account.AccountNumber}");
             }

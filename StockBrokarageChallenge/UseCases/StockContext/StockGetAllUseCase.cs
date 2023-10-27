@@ -27,7 +27,7 @@ namespace StockBrokarageChallenge.Application.UseCases.StockContext
         public async Task<ICollection<StockOutput>> ExecuteAsync(object? input)
         {
 
-            var response = await _stockRepository.GetAll();
+            var response = await _stockRepository.GetAll().ConfigureAwait(false);
             var listResponse = new List<StockOutput>();
             foreach (var item in response)
             {
@@ -35,8 +35,8 @@ namespace StockBrokarageChallenge.Application.UseCases.StockContext
                 
                 var history = new StockHistoryPrice(item.Price);
                 item.AddHistory(history);
-                await _historyPriceRepository.Create(history);
-                await _stockRepository.Update(item);
+                await _historyPriceRepository.Create(history).ConfigureAwait(false);
+                await _stockRepository.Update(item).ConfigureAwait(false);
                 
                 listResponse.Add(_mapper.Map<StockOutput>(item));
             }

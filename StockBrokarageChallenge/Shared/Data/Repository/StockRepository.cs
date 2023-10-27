@@ -2,9 +2,11 @@
 using StockBrokarageChallenge.Application.Shared.Data.Context;
 using StockBrokarageChallenge.Application.Shared.Data.Repository.Interfaces;
 using StockBrokarageChallenge.Application.Shared.Models;
+using System.Diagnostics.CodeAnalysis;
 
 namespace StockBrokarageChallenge.Application.Shared.Data.Repository
 {
+    [ExcludeFromCodeCoverage]
     public sealed class StockRepository : IStockRepository
     {
         private readonly ApplicationDbContext _context;
@@ -17,48 +19,37 @@ namespace StockBrokarageChallenge.Application.Shared.Data.Repository
         public async Task<Stock> Create(Stock entity)
         {
             _context.Add(entity);
-            await _context.SaveChangesAsync();
-            var newStock = await _context.Stocks.Where(e => e.Name == entity.Name).FirstOrDefaultAsync();
-            return newStock;
+            await _context.SaveChangesAsync().ConfigureAwait(false);
+            return entity;
         }
 
         public async Task<ICollection<Stock>> GetAll()
         {
             // Include is to get related entities
-            return await _context.Stocks.Include(stock => stock.History).ToListAsync();
+            return await _context.Stocks.Include(stock => stock.History).ToListAsync().ConfigureAwait(false);
         }
 
         public async Task<Stock> GetByCodeOrByNameAsync(string input)
         {
-            if (input.Length == 5)
-            {
-                var stock = await _context.Stocks.Where(e => e.Code == input).Include(s => s.History).FirstOrDefaultAsync();
-                return stock;
-            }
-            else
-            {
-                var stock = await _context.Stocks.Where(e => e.Name == input).Include(s => s.History).FirstOrDefaultAsync();
-                return stock;
-            }
+            return await _context.Stocks.Include(s => s.History).FirstOrDefaultAsync(e => e.Code == input || e.Name == input).ConfigureAwait(false);
         }
 
         public async Task<Stock> GetById(int id)
         {
-            var stock = await _context.Stocks.Where(e => e.Id == id).FirstOrDefaultAsync();
-            return stock;
+            return await _context.Stocks.FirstOrDefaultAsync(e => e.Id == id).ConfigureAwait(false);
         }
 
         public async Task<Stock> Remove(Stock entity)
         {
             _context.Remove(entity);
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync().ConfigureAwait(false);
             return entity;
         }
 
         public async Task<Stock> Update(Stock entity)
         {
             _context.Update(entity);
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync().ConfigureAwait(false);
             return entity;
         }
     }

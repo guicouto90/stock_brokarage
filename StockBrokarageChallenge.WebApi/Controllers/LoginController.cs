@@ -24,7 +24,7 @@ namespace StockBrokarageChallenge.WebApi.Controllers
         { 
             try
             {
-                var result = await _requestHandlers.Using<AuthenticateUseCase>().ExecuteAsync(input);
+                var result = await _requestHandlers.Using<AuthenticateUseCase>().ExecuteAsync(input).ConfigureAwait(false);
                 return Ok(result);
             } catch(HttpRequestException ex)
             {

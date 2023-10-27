@@ -21,9 +21,9 @@ namespace StockBrokarageChallenge.Application.UseCases.StockContext
             _mapper = mapper;
         }
 
-        public async Task<StockOutput> ExecuteAsync(StockCreateInput input)
+        public async Task<StockOutput?> ExecuteAsync(StockCreateInput input)
         {
-            var isStockExist = await _stockRepository.GetByCodeOrByNameAsync(input.Code);
+            var isStockExist = await _stockRepository.GetByCodeOrByNameAsync(input.Code).ConfigureAwait(false);
             if (isStockExist != null)
             {
                 return null;
@@ -31,7 +31,7 @@ namespace StockBrokarageChallenge.Application.UseCases.StockContext
             var stock = new Stock(input.Name, input.Code);
             var history = new StockHistoryPrice(stock.Price);
             stock.AddHistory(history);
-            await _stockRepository.Create(stock);
+            await _stockRepository.Create(stock).ConfigureAwait(false);
             
             return _mapper.Map<StockOutput>(stock);
         }

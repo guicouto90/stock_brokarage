@@ -18,9 +18,8 @@ namespace StockBrokarageChallenge.Application.Shared.Data.Repository
         public async Task<Account> Create(Account entity)
         {
             _context.Add(entity);
-            await _context.SaveChangesAsync();
-            var newAccount = await _context.Accounts.Where(e => e.AccountNumber == entity.AccountNumber).FirstOrDefaultAsync();
-            return newAccount;
+            await _context.SaveChangesAsync().ConfigureAwait(false);
+            return entity;
         }
 
         public async Task<ICollection<Account>> GetAll()
@@ -31,9 +30,9 @@ namespace StockBrokarageChallenge.Application.Shared.Data.Repository
         public async Task<Account> GetByCustomerId(int id)
         {
             return await _context.Accounts
-                .Where(a => a.CustomerId == id)
                 .Include(a => a.TransactionHistories)
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync(a => a.CustomerId == id)
+                .ConfigureAwait(false);
         }
 
         public async Task<Account> GetByCustomerIdWithWalletAsync(int customerId)
@@ -43,45 +42,45 @@ namespace StockBrokarageChallenge.Application.Shared.Data.Repository
                 .Include(a => a.Wallet)
                 .Include(a => a.Wallet.StocksWallet)
                     .ThenInclude(sw => sw.Stock)
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync()
+                .ConfigureAwait(false);
         }
 
         public async Task<Account> GetById(int id)
         {
-            return await _context.Accounts.Where(a => a.Id == id).FirstOrDefaultAsync();
+            return await _context.Accounts.FirstOrDefaultAsync(a => a.Id == id).ConfigureAwait(false);
         }
 
         public async Task<Account> GetByNumberAsync(int number)
         {
-            return await _context.Accounts.Where(a => a.AccountNumber == number).FirstOrDefaultAsync();
+            return await _context.Accounts.FirstOrDefaultAsync(a => a.AccountNumber == number).ConfigureAwait(false);
         }
 
         public async Task<Account> GetByNumberWithTransactionHistoryAsync(int number)
         {
             return await _context.Accounts
-                .Where(a => a.AccountNumber == number)
                 .Include(a => a.TransactionHistories)
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync(a => a.AccountNumber == number)
+                .ConfigureAwait(false);
         }
 
         public async Task<Account> GetLastAccount()
         {
-            return await _context.Accounts.OrderBy(a => a.AccountNumber).LastOrDefaultAsync();
+            return await _context.Accounts.OrderBy(a => a.AccountNumber).LastOrDefaultAsync().ConfigureAwait(false);
         }
 
         public async Task<Account> Remove(Account entity)
         {
             _context.Remove(entity);
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync().ConfigureAwait(false);
             return entity;
         }
 
         public async Task<Account> Update(Account entity)
         {
             _context.Update(entity);
-            await _context.SaveChangesAsync();
-            var account = await _context.Accounts.Where(e => e.AccountNumber == entity.AccountNumber).FirstOrDefaultAsync();
-            return account;
+            await _context.SaveChangesAsync().ConfigureAwait(false);
+            return entity;
         }
     }
 }

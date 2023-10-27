@@ -19,9 +19,9 @@ namespace StockBrokarageChallenge.Application.UseCases.AccountContext
             _mapper = mapper;
         }
 
-        public async Task<AccountOutput> ExecuteAsync(int input)
+        public async Task<AccountOutput?> ExecuteAsync(int input)
         {
-            var account = await _accountRepository.GetByCustomerId(input);
+            var account = await _accountRepository.GetByCustomerId(input).ConfigureAwait(false);
             if (account == null)
             {
                 return null;

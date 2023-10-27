@@ -2,11 +2,6 @@
 using StockBrokarageChallenge.Application.Shared.Data.Context;
 using StockBrokarageChallenge.Application.Shared.Data.Repository.Interfaces;
 using StockBrokarageChallenge.Application.Shared.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace StockBrokarageChallenge.Application.Shared.Data.Repository
 {
@@ -25,8 +20,7 @@ namespace StockBrokarageChallenge.Application.Shared.Data.Repository
         {
             _context.Add(entity);
             await _context.SaveChangesAsync();
-            var newHistory = await _context.StocksHistoryPrices.Where(e => e.ActualPrice == entity.ActualPrice).FirstOrDefaultAsync();
-            return newHistory;
+            return entity;
         }
 
         public Task<ICollection<StockHistoryPrice>> GetAll()

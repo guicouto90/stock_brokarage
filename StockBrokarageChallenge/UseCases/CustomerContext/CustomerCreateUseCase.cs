@@ -30,15 +30,15 @@ namespace StockBrokarageChallenge.Application.UseCases.CustomerContext
         {            
             try
             {
-                var customerExist = await _customerRepository.GetByCpfAsync(input.Cpf);
+                var customerExist = await _customerRepository.GetByCpfAsync(input.Cpf).ConfigureAwait(false);
                 if (customerExist != null)
                 {
                     throw new HttpRequestException("Customer already have an account", null, System.Net.HttpStatusCode.BadRequest);
                 }
-                var lastAccount = await _accountRepository.GetLastAccount();
+                var lastAccount = await _accountRepository.GetLastAccount().ConfigureAwait(false);
                 var accountNumber = lastAccount == null ? 1 : lastAccount.AccountNumber + 1;
                 var customer = new Customer(input.Name, input.Cpf, accountNumber, input.Password);
-                await _customerRepository.Create(customer);
+                await _customerRepository.Create(customer).ConfigureAwait(false);
 
                 return _mapper.Map<CustomerOutput>(customer);
             }

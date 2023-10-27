@@ -28,7 +28,7 @@ namespace StockBrokarageChallenge.Application.UseCases.LoginContext
 
         public async Task<LoginOutput> ExecuteAsync(LoginInput? input)
         {
-            var result = await _customerRepository.GetByCpfAsync(input.CustomerCpf);
+            var result = await _customerRepository.GetByCpfAsync(input.CustomerCpf).ConfigureAwait(false);
             if(result == null || !result.Account.VerifyPassword(input.Password))
             {
                 throw new HttpRequestException("Cpf/password invalid", null, System.Net.HttpStatusCode.Unauthorized);
