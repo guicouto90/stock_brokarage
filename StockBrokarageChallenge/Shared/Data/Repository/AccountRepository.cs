@@ -3,9 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using StockBrokarageChallenge.Application.Shared.Data.Context;
 using StockBrokarageChallenge.Application.Shared.Data.Repository.Interfaces;
 using StockBrokarageChallenge.Application.Shared.Models;
+using System.Diagnostics.CodeAnalysis;
 
 namespace StockBrokarageChallenge.Application.Shared.Data.Repository
 {
+    [ExcludeFromCodeCoverage]
     public class AccountRepository : IAccountRepository
     {
         private readonly ApplicationDbContext _context;
